@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -34,6 +36,26 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        if (Auth::check() && Auth::user()->role_id == 1) {
+            $this->redirectTo = route('admin.dashboard');
+        } else {
+            $this->redirectTo = route('visitor.dashboard');
+        }
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Logout trait
+     *
+     * @author Yugo <dedy.yugo.purwanto@gmail.com>
+     * @param  Request $request
+     * @return void         
+     */
+    protected function logout(Request $request)
+    {
+        $this->guard()->logout();
+        $request->session()->flush();
+        $request->session()->regenerate();
+        return redirect('/login');
     }
 }

@@ -17,10 +17,13 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+        if (Auth::guard($guard)->check() && Auth::user()->role_id == 1) {
+            return redirect()->route('admin.dashboard');
+        } if (Auth::guard($guard)->check() && Auth::user()->role_id == 2) {
+            return redirect()->route('visitor.dashboard');
+        } else {
+            return $next($request);
         }
 
-        return $next($request);
     }
 }
