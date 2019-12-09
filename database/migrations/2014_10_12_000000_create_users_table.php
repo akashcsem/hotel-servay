@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 191)->unique();
             $table->string('mobile')->nullable();
             $table->integer('role_id');
+            $table->unsignedBigInteger('visitor_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
