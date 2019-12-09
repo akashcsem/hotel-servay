@@ -14,58 +14,75 @@
     
 @endsection
 
-@section('feature_and_body')
+@section('content')
     <!--//main-header-->
 
     <div class="about-bottom" id="ab">
         <div class="col-md-12 w3l_about_bottom_right two">
             <h3 class="tittle why" style="text-align: center;">Book a Reservation</h3>
             <hr style="border-top: 1px solid red;">
+
+            @include('partials._alert_message')
+
             <div class="book-form">
 
-                <form action="#" method="post">
+                <form action="{{ route('visitor.room.reservation') }}" method="post">
+                    @csrf
                     <div class="col-md-6 form-date-w3-agileits">
                         <label><i class="fa fa-calendar" aria-hidden="true"></i> Arrival Date :</label>
-                        <input  id="datepicker" name="arrival_date" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+                    <input id="datepicker" name="arrival_date" type="text" data-date-format="Y-m-d" value="{{ old('arrival_date') ?: date('Y-m-d') }}">
 
-                    </div>
-                    <div class="col-md-6 form-time-w3layouts second-agile">
-                        <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>
-                        <input type="time" name="arrival_time">
                     </div>
                     <div class="col-md-6 form-date-w3-agileits">
                         <label><i class="fa fa-calendar" aria-hidden="true"></i> Departure Date :</label>
-                        <input  id="datepicker1" name="departure_date" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+                        <input id="datepicker" name="departure_date" type="text" value="{{ old('departure_date') ?: date('Y-m-d') }}" data-date-format="Y-m-d">
 
-                    </div>
-                    <div class="col-md-6 form-time-w3layouts second-agile">
-                        <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>
-                        <input type="time" name="departure_time">
                     </div>
                     <div class="col-md-6 form-left-agileits-w3layouts bottom-w3ls">
                         <label><i class="fa fa-home" aria-hidden="true"></i> Choose a Room :</label>
-                        <select class="form-control">
-                            <option></option>
-                            <option>Standard Double Room</option>
-                            <option>Standard Family Room</option>
-                            <option>Garden Family Room</option>
-                            <option>Deluxe Double Room</option>
-                            <option>Executive Junior Suite</option>
-                            <option>Maisonette</option>
+                        <select class="form-control" name="room">
+                              <option value="" > Select </option>
+                              @foreach ($rooms as $key => $room)
+                        <option value="{{ $room->id }}">{{ $room->name }}</option>
+                              @endforeach
+                              
                         </select>
                     </div>
+
+                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
+                        <label><i class="fa fa-users" aria-hidden="true"></i> No.of Room :</label>
+                        <input type="text" name="number_of_room" class="form-control">
+                    </div>
+
                     <div class="col-md-6 form-left-agileits-w3layouts second-agile">
                         <label><i class="fa fa-users" aria-hidden="true"></i> No.of People :</label>
-                        <select class="form-control">
-                            <option></option>
-                            <option>1 Person</option>
-                            <option>2 People</option>
-                            <option>3 People</option>
-                            <option>4 People</option>
-                            <option>5 People</option>
-                            <option>More</option>
-                        </select>
+                        <input type="text" name="number_of_people" class="form-control">
                     </div>
+
+                    @if (!Auth::user())
+                        
+                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
+                        <label><i class="fa fa-users" aria-hidden="true"></i> Name :</label>
+                        <input type="text" name="name" placeholder="Your name" class="form-control">
+                    </div>
+
+                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
+                        <label><i class="fa fa-users" aria-hidden="true"></i> Mobile :</label>
+                        <input type="text" name="mobile" placeholder="Mobile Number" class="form-control">
+                    </div>
+
+                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
+                        <label><i class="fa fa-users" aria-hidden="true"></i> Email :</label>
+                        <input type="text" name="email" placeholder="Email" class="form-control">
+                    </div>
+
+
+                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
+                        <label><i class="fa fa-users" aria-hidden="true"></i> Password :</label>
+                        <input type="password" name="password" autocomplete="off" autofocus="off" class="form-control">
+                    </div>
+
+                    @endif
                     <div class="clearfix"> </div>
                     <div class="make wow shake" data-wow-duration="1s" data-wow-delay=".5s">
                         <input type="submit" value="Make a Reservation">
@@ -77,6 +94,22 @@
         <div class="clearfix"> </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="special featured">
         <div class="container">
             <div class="ab-w3l-spa">
@@ -85,44 +118,28 @@
                 <p>Online hotel reservations are a popular method for booking hotel rooms. Travelers can book rooms on a computer by using online security to protect their privacy and financial information and by using several online travel agents to compare prices and facilities at different hotels.
                 </p>
             </div>
+
+
+
             <!-- services -->
             <div class="w3_agileits_services_grids">
-                <div class="col-md-3 w3_agileits_services_grid hvr-overline-from-center">
-                    <div class="w3_agileits_services_grid_agile">
-                        <div class="w3_agileits_services_grid_1">
-                            <img src="{{asset('frontEnd')}}/images/5.jpg" alt="service-img">
+
+                  @foreach ($rooms as $key => $room)
+                      
+                  
+                  <div style="margin-top:30px !important" class="my-2 col-md-3 w3_agileits_services_grid hvr-overline-from-center">
+                        <div class="w3_agileits_services_grid_agile">
+                              <div class="w3_agileits_services_grid_1">
+                                    <img src="{{ asset($room->image) }}" height="250px" alt="service-img">
+                              </div>
+                              <h3 title="View Details">
+                                    <a href="">{{ $room->name }} </a>  
+                              </h3>
+                              <p>Online hotel reservations are a popular method for booking hotel rooms.</p>
                         </div>
-                        <h3>Deluxe Room</h3>
-                        <p>Online hotel reservations are a popular method for booking hotel rooms.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 w3_agileits_services_grid hvr-overline-from-center">
-                    <div class="w3_agileits_services_grid_agile">
-                        <div class="w3_agileits_services_grid_1">
-                            <img src="{{asset('frontEnd')}}/images/6.jpg" alt="service-img">
-                        </div>
-                        <h3>Luxury Room</h3>
-                        <p>Online hotel reservations are a popular method for booking hotel rooms.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 w3_agileits_services_grid hvr-overline-from-center">
-                    <div class="w3_agileits_services_grid_agile">
-                        <div class="w3_agileits_services_grid_1">
-                            <img src="{{asset('frontEnd')}}/images/7.jpg" alt="service-img">
-                        </div>
-                        <h3>Swimming Pool</h3>
-                        <p>Online hotel reservations are a popular method for booking hotel rooms.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 w3_agileits_services_grid hvr-overline-from-center">
-                    <div class="w3_agileits_services_grid_agile">
-                        <div class="w3_agileits_services_grid_1">
-                            <img src="{{asset('frontEnd')}}/images/8.jpg" alt="service-img">
-                        </div>
-                        <h3>Spa Care</h3>
-                        <p>Online hotel reservations are a popular method for booking hotel rooms.</p>
-                    </div>
-                </div>
+                  </div>
+                  @endforeach
+
                 <div class="clearfix"> </div>
             </div>
             <!-- //services -->
@@ -254,79 +271,7 @@
         </div>
         <div class="clearfix"> </div>
     </div>
-    <!-- //about-bottom -->
-    <!-- about-bottom -->
-{{--    <div class="about-bottom" id="ab">--}}
-{{--        <div class="col-md-6 w3l_about_bottom_right two">--}}
-{{--            <h3 class="tittle why">Book a Reservation</h3>--}}
-{{--            <div class="book-form">--}}
-
-{{--                <form action="#" method="post">--}}
-{{--                    <div class="col-md-6 form-date-w3-agileits">--}}
-{{--                        <label><i class="fa fa-user" aria-hidden="true"></i> Name :</label>--}}
-{{--                        <input type="text" name="name" placeholder="Your name" required="">--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-date-w3-agileits second-agile">--}}
-{{--                        <label><i class="fa fa-envelope" aria-hidden="true"></i> Email :</label>--}}
-{{--                        <input type="email" name="email" placeholder="Your email" required="">--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-date-w3-agileits">--}}
-{{--                        <label><i class="fa fa-calendar" aria-hidden="true"></i> Arrival Date :</label>--}}
-{{--                        <input  id="datepicker" name="Text" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">--}}
-
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-time-w3layouts second-agile">--}}
-{{--                        <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>--}}
-{{--                        <input type="time">--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-date-w3-agileits">--}}
-{{--                        <label><i class="fa fa-calendar" aria-hidden="true"></i> Departure Date :</label>--}}
-{{--                        <input  id="datepicker1" name="Text" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">--}}
-
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-time-w3layouts second-agile">--}}
-{{--                        <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>--}}
-{{--                        <input type="time">--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-left-agileits-w3layouts bottom-w3ls">--}}
-{{--                        <label><i class="fa fa-home" aria-hidden="true"></i> Choose a Room :</label>--}}
-{{--                        <select class="form-control">--}}
-{{--                            <option></option>--}}
-{{--                            <option>Standard Double Room</option>--}}
-{{--                            <option>Standard Family Room</option>--}}
-{{--                            <option>Garden Family Room</option>--}}
-{{--                            <option>Deluxe Double Room</option>--}}
-{{--                            <option>Executive Junior Suite</option>--}}
-{{--                            <option>Maisonette</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">--}}
-{{--                        <label><i class="fa fa-users" aria-hidden="true"></i> No.of People :</label>--}}
-{{--                        <select class="form-control">--}}
-{{--                            <option></option>--}}
-{{--                            <option>1 Person</option>--}}
-{{--                            <option>2 People</option>--}}
-{{--                            <option>3 People</option>--}}
-{{--                            <option>4 People</option>--}}
-{{--                            <option>5 People</option>--}}
-{{--                            <option>More</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-{{--                    <div class="clearfix"> </div>--}}
-{{--                    <div class="make wow shake" data-wow-duration="1s" data-wow-delay=".5s">--}}
-{{--                        <input type="submit" value="Make a Reservation">--}}
-{{--                    </div>--}}
-{{--                </form>--}}
-{{--            </div>--}}
-
-{{--        </div>--}}
-{{--        <div class="col-md-6 w3l_about_bottom_left">--}}
-
-{{--            <img src="{{asset('frontEnd')}}/images/33.jpg" alt="" class="img-responsive" />--}}
-{{--            <div class="w3l_about_bottom_left_video book-text">--}}
-{{--                <h4>BooK Now</h4>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+   
 
         <div class="clearfix"> </div>
     </div>

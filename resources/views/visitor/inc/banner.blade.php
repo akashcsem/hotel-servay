@@ -9,10 +9,9 @@
         </div>
         <div class="agileits-contact-info text-right">
             <ul>
-{{--                <li><i class="fa fa-volume-control-phone" aria-hidden="true"></i> +090 480 088</li>--}}
-                <li><a href="{{url('/admin/login ')}}">Admin</a> </li>
-                <li><a href="{{url('/home')}}">Login</a> </li>
-                <li><a style="margin-right: 13px;" href="{{url('/register')}}">Register</a> </li>
+                <li><a href="{{ route('login') }}">Admin</a> </li>
+                <li><a href="{{ route('home') }}">Login</a> </li>
+                <li><a style="margin-right: 13px;" href="{{ route('register') }}">Register</a> </li>
                 <li><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:info@example.com">anisahmed13142@gmail.com</a></li>
             </ul>
         </div>
