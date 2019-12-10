@@ -15,7 +15,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        $reservations = Reservation::orderBy('id', 'DESC')->paginate(10);
+        return view('admin.reservation.index', compact('reservations'));
     }
 
     /**

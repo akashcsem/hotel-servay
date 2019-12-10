@@ -1,22 +1,45 @@
 
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        @yield('title')
+    </title>
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); } 
+    </script>
 
-@extends('layouts.visitor')
+    <link href="{{asset('frontEnd')}}/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{asset('frontEnd')}}/css/flexslider.css" type="text/css" media="screen" property="" />
+    <link rel="stylesheet" type="text/css" href="{{asset('frontEnd')}}/css/zoomslider.css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('frontEnd')}}/css/style.css" />
+    <link href="{{asset('frontEnd')}}/css/font-awesome.css" rel="stylesheet">
+    <script type="text/javascript" src="{{asset('frontEnd')}}/js/modernizr-2.6.2.min.js"></script>
+    <!--/web-fonts-->
+    <link href="{{asset('frontEnd')}}///fonts.googleapis.com/css?family=Dosis:200,300,400,500,600" rel="stylesheet">
+    <link href="{{asset('frontEnd')}}///fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+    <!-- //for-mobile-apps -->
+    @yield('css')
+    <!--//web-fonts-->
 
-@section('title', 'Hotel Reservation')
-   
+</head>
+    <body>
+        <!--/main-header-->
+        <!--banner-section-->
+        @include('visitor.inc.banner')
+        <!--/banner-section-->
 
-@section('css')
-    
-@endsection
+        <!--menu_slide-->
+        @include('visitor.inc.menu_slide')
+        <!--/menu_slide-->
 
-@section('js')
-    
-@endsection
 
-@section('feature_and_body')
-    <!--//main-header-->
-
+        <!-- feature and body -->
+        
     <div class="about-bottom" id="ab">
         <div class="col-md-12 w3l_about_bottom_right two">
             <h3 class="tittle why" style="text-align: center;">Book a Reservation</h3>
@@ -24,51 +47,9 @@
             <div class="book-form">
 
                 <form action="#" method="post">
-                    <div class="col-md-6 form-date-w3-agileits">
-                        <label><i class="fa fa-calendar" aria-hidden="true"></i> Arrival Date :</label>
-                        <input  id="datepicker" name="arrival_date" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
-
-                    </div>
-                    <div class="col-md-6 form-time-w3layouts second-agile">
-                        <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>
-                        <input type="time" name="arrival_time">
-                    </div>
-                    <div class="col-md-6 form-date-w3-agileits">
-                        <label><i class="fa fa-calendar" aria-hidden="true"></i> Departure Date :</label>
-                        <input  id="datepicker1" name="departure_date" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
-
-                    </div>
-                    <div class="col-md-6 form-time-w3layouts second-agile">
-                        <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>
-                        <input type="time" name="departure_time">
-                    </div>
-                    <div class="col-md-6 form-left-agileits-w3layouts bottom-w3ls">
-                        <label><i class="fa fa-home" aria-hidden="true"></i> Choose a Room :</label>
-                        <select class="form-control">
-                            <option></option>
-                            <option>Standard Double Room</option>
-                            <option>Standard Family Room</option>
-                            <option>Garden Family Room</option>
-                            <option>Deluxe Double Room</option>
-                            <option>Executive Junior Suite</option>
-                            <option>Maisonette</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
-                        <label><i class="fa fa-users" aria-hidden="true"></i> No.of People :</label>
-                        <select class="form-control">
-                            <option></option>
-                            <option>1 Person</option>
-                            <option>2 People</option>
-                            <option>3 People</option>
-                            <option>4 People</option>
-                            <option>5 People</option>
-                            <option>More</option>
-                        </select>
-                    </div>
                     <div class="clearfix"> </div>
                     <div class="make wow shake" data-wow-duration="1s" data-wow-delay=".5s">
-                        <input type="submit" value="Make a Reservation">
+                            <a class="btn btn-danger btn-block" href="{{ route('visitor.rooms.index') }}">Make a Reservation</a>
                     </div>
                 </form>
             </div>
@@ -254,81 +235,9 @@
         </div>
         <div class="clearfix"> </div>
     </div>
-    <!-- //about-bottom -->
-    <!-- about-bottom -->
-{{--    <div class="about-bottom" id="ab">--}}
-{{--        <div class="col-md-6 w3l_about_bottom_right two">--}}
-{{--            <h3 class="tittle why">Book a Reservation</h3>--}}
-{{--            <div class="book-form">--}}
+    
 
-{{--                <form action="#" method="post">--}}
-{{--                    <div class="col-md-6 form-date-w3-agileits">--}}
-{{--                        <label><i class="fa fa-user" aria-hidden="true"></i> Name :</label>--}}
-{{--                        <input type="text" name="name" placeholder="Your name" required="">--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-date-w3-agileits second-agile">--}}
-{{--                        <label><i class="fa fa-envelope" aria-hidden="true"></i> Email :</label>--}}
-{{--                        <input type="email" name="email" placeholder="Your email" required="">--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-date-w3-agileits">--}}
-{{--                        <label><i class="fa fa-calendar" aria-hidden="true"></i> Arrival Date :</label>--}}
-{{--                        <input  id="datepicker" name="Text" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">--}}
-
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-time-w3layouts second-agile">--}}
-{{--                        <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>--}}
-{{--                        <input type="time">--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-date-w3-agileits">--}}
-{{--                        <label><i class="fa fa-calendar" aria-hidden="true"></i> Departure Date :</label>--}}
-{{--                        <input  id="datepicker1" name="Text" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">--}}
-
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-time-w3layouts second-agile">--}}
-{{--                        <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>--}}
-{{--                        <input type="time">--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-left-agileits-w3layouts bottom-w3ls">--}}
-{{--                        <label><i class="fa fa-home" aria-hidden="true"></i> Choose a Room :</label>--}}
-{{--                        <select class="form-control">--}}
-{{--                            <option></option>--}}
-{{--                            <option>Standard Double Room</option>--}}
-{{--                            <option>Standard Family Room</option>--}}
-{{--                            <option>Garden Family Room</option>--}}
-{{--                            <option>Deluxe Double Room</option>--}}
-{{--                            <option>Executive Junior Suite</option>--}}
-{{--                            <option>Maisonette</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">--}}
-{{--                        <label><i class="fa fa-users" aria-hidden="true"></i> No.of People :</label>--}}
-{{--                        <select class="form-control">--}}
-{{--                            <option></option>--}}
-{{--                            <option>1 Person</option>--}}
-{{--                            <option>2 People</option>--}}
-{{--                            <option>3 People</option>--}}
-{{--                            <option>4 People</option>--}}
-{{--                            <option>5 People</option>--}}
-{{--                            <option>More</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-{{--                    <div class="clearfix"> </div>--}}
-{{--                    <div class="make wow shake" data-wow-duration="1s" data-wow-delay=".5s">--}}
-{{--                        <input type="submit" value="Make a Reservation">--}}
-{{--                    </div>--}}
-{{--                </form>--}}
-{{--            </div>--}}
-
-{{--        </div>--}}
-{{--        <div class="col-md-6 w3l_about_bottom_left">--}}
-
-{{--            <img src="{{asset('frontEnd')}}/images/33.jpg" alt="" class="img-responsive" />--}}
-{{--            <div class="w3l_about_bottom_left_video book-text">--}}
-{{--                <h4>BooK Now</h4>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-
-        <div class="clearfix"> </div>
+    <div class="clearfix"> </div>
     </div>
     <!-- //about -->
     <!-- /plans -->
@@ -482,14 +391,107 @@
             <!-- //flexSlider -->
         </div>
     </div>
-    <!-- //testimonials -->
-    @endsection
+        <!--/feature and body -->
+
+        <!-- Footer -->
+        @include('visitor.inc.footer')
+        <!--/footer -->
+
+        <script type="text/javascript" src="{{asset('frontEnd')}}/js/jquery-2.1.4.min.js"></script>
+    <!-- Dropdown-Menu-JavaScript -->
+    <script>
+        $(document).ready(function(){
+            $(".dropdown").hover(
+                function() {
+                    $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+                function() {
+                    $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+    </script>
+    <!-- //Dropdown-Menu-JavaScript -->
+
+
+    <script type="text/javascript" src="{{asset('frontEnd')}}/js/jquery.zoomslider.min.js"></script>
+    <!-- search-jQuery -->
+    <script src="{{asset('frontEnd')}}/js/main.js"></script>
+
+    <!--/script-->
+    <script src="{{asset('frontEnd')}}/js/simplePlayer.js"></script>
+    <script>
+        $("document").ready(function() {
+            $("#video").simplePlayer();
+        });
+    </script>
+    <!-- flexSlider -->
+    <script defer src="{{asset('frontEnd')}}/js/jquery.flexslider.js"></script>
+    <script type="text/javascript">
+        $(window).load(function(){
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function(slider){
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+    </script>
+    <!--//script for portfolio-->
+    <!-- Calendar -->
+    <link rel="stylesheet" href="{{asset('frontEnd')}}/css/jquery-ui.css" />
+    <script src="{{asset('frontEnd')}}/js/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $( "#datepicker,#datepicker1,#datepicker2,#datepicker3" ).datepicker();
+        });
+    </script>
+    <!-- //Calendar -->
+    <script type="text/javascript" src="{{asset('frontEnd')}}/js/move-top.js"></script>
+    <script type="text/javascript" src="{{asset('frontEnd')}}/js/easing.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top},900);
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /*
+            var defaults = {
+                  containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+             };
+            */
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+        });
+    </script>
+    <!--end-smooth-scrolling-->
+    <!--js for bootstrap working-->
+    <script src="{{asset('frontEnd')}}/js/bootstrap.js"></script>
+    <!-- //for bootstrap working -->
+        @yield('js')
+    </body>
+</html>
 
 
 
 
-@section('banner_and_menu_for_other_pages_not_for_master_page')
-    <div id="demo-1" class="banner-inner">
+
+
+
+{{-- 
+@section('banner_and_menu_for_other_pages_not_for_master_page') --}}
+    {{-- <div id="demo-1" class="banner-inner">
         <!--/header-w3l-->
         <div class="header-w3-agileits" id="home">
             <div class="inner-header-agile">
@@ -548,5 +550,5 @@
 
             <!--//header-w3l-->
         </div>
-    </div>
-    @endsection
+    </div> --}}
+    {{-- @endsection --}}

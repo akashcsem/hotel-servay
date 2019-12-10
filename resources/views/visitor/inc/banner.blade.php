@@ -9,10 +9,24 @@
         </div>
         <div class="agileits-contact-info text-right">
             <ul>
-                <li><a href="{{ route('login') }}">Admin</a> </li>
-                <li><a href="{{ route('home') }}">Login</a> </li>
-                <li><a style="margin-right: 13px;" href="{{ route('register') }}">Register</a> </li>
-                <li><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:info@example.com">anisahmed13142@gmail.com</a></li>
+                @if (Auth::check())
+
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                          document.getElementById('logout-form').submit();">
+                             {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                             @csrf
+                        </form>
+                    </li>
+                <li><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="">{{ Auth::user()->name }}</a></li>
+                @else 
+                    <li><a href="{{ route('home') }}">Login</a> </li>
+                    <li><a style="margin-right: 13px;" href="{{ route('register') }}">Register</a> </li>
+                @endif                
             </ul>
         </div>
         <div class="clearfix"></div>

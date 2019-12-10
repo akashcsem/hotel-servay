@@ -11,4 +11,10 @@ class DashboardController extends Controller
     {
         return view('visitor.dashboard');
     }
+
+
+    public function contact ()
+    {
+        return view('visitor.contact');
+    }
 }

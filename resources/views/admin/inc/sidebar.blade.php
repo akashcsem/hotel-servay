@@ -52,6 +52,10 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
+            <li>
+            <a href="{{ route('admin.reservation.list') }}"> Reservation List </span></a>
+                <!-- /.nav-second-level -->
+            </li>
             
         </ul>
     </div>

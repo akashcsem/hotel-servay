@@ -18,6 +18,7 @@ Route::group(['prefix'=>'admin', 'as'=>'admin.', 'namespace'=>'Admin', 'middlewa
     Route::resource('payments', 'PaymentController');
     Route::resource('reservations', 'ReservationController');
     Route::resource('contacts', 'ContactController');
+    Route::get('reservation-list', 'ReservationController@index')->name('reservation.list');
 });
  
  
@@ -31,4 +32,10 @@ Route::group(['prefix'=>'visitor', 'as'=>'visitor.', 'namespace'=>'Visitor'], fu
     Route::resource('rooms', 'RoomController');
     Route::post('create-reservation', 'ReservationController@createReservation')->name('room.reservation');
     Route::get('reservation-success', 'ReservationController@createSuccess')->name('reservation.success');
+    Route::get('create-payment/{reservation}', 'ReservationController@createPayment')->name('payment.create');
+    Route::post('/create-payment', 'ReservationController@storePayment')->name('payment.store');
+    Route::get('reservatio-success/', 'ReservationController@reservationSuccess')->name('reservatio.success');
+
+
+    Route::get('/contact-us', 'DashboardController@contact')->name('contact.us');
 });

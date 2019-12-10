@@ -33,11 +33,13 @@
                     <input id="datepicker" name="arrival_date" type="text" data-date-format="Y-m-d" value="{{ old('arrival_date') ?: date('Y-m-d') }}">
 
                     </div>
+
                     <div class="col-md-6 form-date-w3-agileits">
                         <label><i class="fa fa-calendar" aria-hidden="true"></i> Departure Date :</label>
-                        <input id="datepicker" name="departure_date" type="text" value="{{ old('departure_date') ?: date('Y-m-d') }}" data-date-format="Y-m-d">
+                    <input id="datepicker2" name="departure_date" type="text" data-date-format="Y-m-d" value="{{ old('departure_date') ?: date('Y-m-d') }}">
 
                     </div>
+                    
                     <div class="col-md-6 form-left-agileits-w3layouts bottom-w3ls">
                         <label><i class="fa fa-home" aria-hidden="true"></i> Choose a Room :</label>
                         <select class="form-control" name="room">
@@ -73,13 +75,12 @@
 
                     <div class="col-md-6 form-left-agileits-w3layouts second-agile">
                         <label><i class="fa fa-users" aria-hidden="true"></i> Email :</label>
-                        <input type="text" name="email" placeholder="Email" class="form-control">
+                        <input type="text" name="email" placeholder="Email Address" class="form-control">
                     </div>
-
 
                     <div class="col-md-6 form-left-agileits-w3layouts second-agile">
                         <label><i class="fa fa-users" aria-hidden="true"></i> Password :</label>
-                        <input type="password" name="password" autocomplete="off" autofocus="off" class="form-control">
+                        <input type="text" name="password" class="form-control">
                     </div>
 
                     @endif
@@ -135,7 +136,7 @@
                               <h3 title="View Details">
                                     <a href="">{{ $room->name }} </a>  
                               </h3>
-                              <p>Online hotel reservations are a popular method for booking hotel rooms.</p>
+                              <p>{{ $room->description }}</p>
                         </div>
                   </div>
                   @endforeach

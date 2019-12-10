@@ -20,12 +20,10 @@
 
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="/">Home</a></li>
-                            <li><a href="{{url('/gallery')}}">Gallery</a></li>
+                            <li><a href="">Gallery</a></li>
                             <li><a href="{{ route('visitor.rooms.index') }}">Rooms</a></li>
-                            <li><a href="{{url('/about')}}">About</a></li>
-                            <li><a href="{{url('/contact')}}">Contact</a></li>
-
-
+                            <li><a href="">About</a></li>
+                            <li><a href="{{ route('visitor.contact.us') }}">Contact</a></li>
                         </ul>
 
 
