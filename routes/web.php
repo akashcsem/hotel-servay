@@ -17,8 +17,10 @@ Route::group(['prefix'=>'admin', 'as'=>'admin.', 'namespace'=>'Admin', 'middlewa
     Route::resource('rooms', 'RoomController');
     Route::resource('payments', 'PaymentController');
     Route::resource('reservations', 'ReservationController');
+    Route::resource('employees', 'EmployeeController');
     Route::resource('contacts', 'ContactController');
     Route::get('reservation-list', 'ReservationController@index')->name('reservation.list');
+    Route::delete('reservation-list{reservation}', 'ReservationController@destroy')->name('reservations.destroy');
 });
  
  
@@ -38,4 +40,5 @@ Route::group(['prefix'=>'visitor', 'as'=>'visitor.', 'namespace'=>'Visitor'], fu
 
 
     Route::get('/contact-us', 'DashboardController@contact')->name('contact.us');
+    Route::get('reservation-cancel/{reservation}', 'ReservationController@cancel')->name('cancel-reservation');
 });

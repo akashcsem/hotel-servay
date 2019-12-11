@@ -19,4 +19,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class, 'reserved_by', 'id');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

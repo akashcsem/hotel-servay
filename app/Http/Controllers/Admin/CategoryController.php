@@ -132,7 +132,7 @@ class CategoryController extends Controller
             $category->delete();
             return redirect()->back()->with('message', 'Category deleted successfull');
         } catch (Exception $ex) {
-            return redierct()->back()->with('error', 'Some error, please check');
+            return redirect()->back()->with('error', 'Some error, please check');
         }
     }
 

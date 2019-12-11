@@ -115,4 +115,16 @@ class ReservationController extends Controller
         return view('visitor.resurvation_success_message');
     }
 
+
+    public function cancel(Reservation $reservation)
+    {
+        try {
+            $reservation->delete();
+            return redirect()->route('visitor.rooms.index');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        dd($reservation);
+    }
+
 }

@@ -24,7 +24,7 @@
                     </li>
                 <li><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="">{{ Auth::user()->name }}</a></li>
                 @else 
-                    <li><a href="{{ route('home') }}">Login</a> </li>
+                    <li><a href="{{ route('login') }}">Login</a> </li>
                     <li><a style="margin-right: 13px;" href="{{ route('register') }}">Register</a> </li>
                 @endif                
             </ul>

@@ -82,6 +82,14 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        //
+        try {
+            if ($reservation->payments()->count()>0) {
+                $reservation->payments()->delete();
+            } 
+            $reservation->delete();
+            return redirect()->back()->with('message', 'Reservation Deleted Successfully');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('message', 'Reservation does not deleted, please check the error');
+        }
     }
 }

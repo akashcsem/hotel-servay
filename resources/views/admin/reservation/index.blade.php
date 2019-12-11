@@ -45,6 +45,8 @@
                         <th class="rent"> Number of Room </th>
                         <th class="description"> Number of People </th>
                         <th class="description"> Cost </th>
+                        <th class="description"> Action </th>
+
 
                   </tr>
             </thead>
@@ -59,19 +61,52 @@
                   <td>{{ $reservation->number_of_room }}</td>
                   <td>{{ $reservation->number_of_people }}</td>
                   <td>{{ $reservation->number_of_room * $reservation->room->rent }}Tk.</td>
+                  <td>
+                      
+                      <button type="button" onclick="delete_check({{ $reservation->id }})" class="btn btn-sm btn-danger" title="Delete">
+                              Delete
+                          </button>
+  
+                      <form action="{{ route('admin.reservations.destroy',$reservation->id)}}" id="deleteCheck_{{ $reservation->id }}" method="POST">
+                          @csrf
+                          @method("DELETE")
+                      </form>
+                  </td>
             </tr>
             @endforeach
             @if (count($reservations) < 1)
-                  <tr>
-                  <td colspan="7">
+                <tr>
+                    <td colspan="7">
                         <h4 class="text-center">No category created yet</h4>
-                  </td>
-                  </tr>
+                    </td>
+                </tr>
             @endif
       </table>
       {{ $reservations->links() }}
 @endsection
 
 @section('js')
-  
+   <!-- inline scripts related to this page -->
+   <script type="text/javascript">
+
+    function delete_check(id)
+    {
+        Swal.fire({
+            title: 'Are you sure ?',
+            html: "<b>You want to delete permanently !</b>",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            width:400,
+        }).then((result) =>{
+            if(result.value){
+                $('#deleteCheck_'+id).submit();
+            }
+        })
+
+    }
+
+</script>
 @stop

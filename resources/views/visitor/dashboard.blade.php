@@ -41,10 +41,8 @@
         <!-- feature and body -->
         
     <div class="about-bottom" id="ab">
-        <div class="col-md-12 w3l_about_bottom_right two">
-            <h3 class="tittle why" style="text-align: center;">Book a Reservation</h3>
+        <div class="col-md-12" style="padding-top:100px; padding-bottom:100px">
             <hr style="border-top: 1px solid red;">
-            <div class="book-form">
 
                 <form action="#" method="post">
                     <div class="clearfix"> </div>
@@ -52,7 +50,6 @@
                             <a class="btn btn-danger btn-block" href="{{ route('visitor.rooms.index') }}">Make a Reservation</a>
                     </div>
                 </form>
-            </div>
 
         </div>
         <div class="clearfix"> </div>

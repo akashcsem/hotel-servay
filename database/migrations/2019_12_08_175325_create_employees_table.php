@@ -18,9 +18,12 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->string('mobile');
             $table->string('email')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('religion')->nullable();
-            $table->string('address')->nullable();
+            $table->string('gender');
+            $table->string('religion');
+            $table->text('address')->nullable();
+            $table->string('reference')->nullable();
+            $table->decimal('salary', 15, 2)->default(0.00);
+            $table->date('joining_date');
             $table->string('image')->default('default.png');
 
             $table->unsignedBigInteger('designation_id');
