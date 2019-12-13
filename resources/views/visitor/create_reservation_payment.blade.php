@@ -31,8 +31,7 @@
                 </ul>
             </div>
             <div class="col-md-8 col-md-offset-2">
-                {{-- @dd($reservation) --}}
-            <form action="/visitor/create-payment/" method="POST">
+            <form action="/visitor/create-paymentsd" method="POST">
                     @csrf
                     <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
                     <input type="hidden" name="reserved_by" value="{{ $reservation->reserved_by }}">

@@ -35,10 +35,12 @@ Route::group(['prefix'=>'visitor', 'as'=>'visitor.', 'namespace'=>'Visitor'], fu
     Route::post('create-reservation', 'ReservationController@createReservation')->name('room.reservation');
     Route::get('reservation-success', 'ReservationController@createSuccess')->name('reservation.success');
     Route::get('create-payment/{reservation}', 'ReservationController@createPayment')->name('payment.create');
-    Route::post('/create-payment', 'ReservationController@storePayment')->name('payment.store');
+    // Route::post('/create-payment', 'ReservationController@storePayment')->name('payment.store');
+    Route::post('/create-paymentsd', 'ReservationController@storePayment')->name('payment.store');
     Route::get('reservatio-success/', 'ReservationController@reservationSuccess')->name('reservatio.success');
 
 
     Route::get('/contact-us', 'DashboardController@contact')->name('contact.us');
     Route::get('reservation-cancel/{reservation}', 'ReservationController@cancel')->name('cancel-reservation');
+    Route::get('send-to-warning', 'ReservationController@warning')->name('warning');
 });

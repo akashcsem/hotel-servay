@@ -26,18 +26,37 @@
 
             <div class="book-form">
 
+                @if ($request->session()->has('room_id'))
+                    @php
+                        $room_id          = $request->session()->get('room_id');
+                        $arrival_date     = $request->session()->get('arrival_date');
+                        $departure_date   = $request->session()->get('departure_date');
+                        $number_of_room   = $request->session()->get('number_of_room');
+                        $number_of_people = $request->session()->get('number_of_people');
+                        $session_set = true;
+                    @endphp
+                @else
+                @php $session_set = false; @endphp
+                @endif
                 <form action="{{ route('visitor.room.reservation') }}" method="post">
                     @csrf
                     <div class="col-md-6 form-date-w3-agileits">
                         <label><i class="fa fa-calendar" aria-hidden="true"></i> Arrival Date :</label>
-                    <input id="datepicker" name="arrival_date" type="text" data-date-format="Y-m-d" value="{{ old('arrival_date') ?: date('Y-m-d') }}">
+                        @if ($session_set)
+                            <input id="datepicker" name="arrival_date" type="text" data-date-format="Y-m-d" value="{{ old('arrival_date') ?: $arrival_date }}">
+                        @else
+                            <input id="datepicker" name="arrival_date" type="text" data-date-format="Y-m-d" value="{{ old('arrival_date') ?: date('Y-m-d') }}">
+                        @endif
 
                     </div>
 
                     <div class="col-md-6 form-date-w3-agileits">
                         <label><i class="fa fa-calendar" aria-hidden="true"></i> Departure Date :</label>
-                    <input id="datepicker2" name="departure_date" type="text" data-date-format="Y-m-d" value="{{ old('departure_date') ?: date('Y-m-d') }}">
-
+                        @if ($session_set)
+                        <input id="datepicker2" name="departure_date" type="text" data-date-format="Y-m-d" value="{{ old('departure_date') ?: $departure_date  }}">
+                        @else
+                        <input id="datepicker2" name="departure_date" type="text" data-date-format="Y-m-d" value="{{ old('departure_date') ?:date('Y-m-d') }}">
+                        @endif
                     </div>
                     
                     <div class="col-md-6 form-left-agileits-w3layouts bottom-w3ls">
@@ -45,7 +64,11 @@
                         <select class="form-control" name="room">
                               <option value="" > Select </option>
                               @foreach ($rooms as $key => $room)
-                        <option value="{{ $room->id }}">{{ $room->name }}</option>
+                              @if ($session_set)
+                                <option value="{{ $room->id }}" {{ $room->id == $room_id ? 'selected' : '' }}>{{ $room->name }}</option>
+                            @else
+                                <option value="{{ $room->id }}">{{ $room->name }}</option>
+                            @endif
                               @endforeach
                               
                         </select>
@@ -53,37 +76,22 @@
 
                     <div class="col-md-6 form-left-agileits-w3layouts second-agile">
                         <label><i class="fa fa-users" aria-hidden="true"></i> No.of Room :</label>
+                        @if ($session_set)
+                        <input type="text" name="number_of_room" value="{{ $number_of_room }}" class="form-control">
+                        @else
                         <input type="text" name="number_of_room" class="form-control">
+                        @endif
                     </div>
 
                     <div class="col-md-6 form-left-agileits-w3layouts second-agile">
                         <label><i class="fa fa-users" aria-hidden="true"></i> No.of People :</label>
+                        @if ($session_set)
+                        <input type="text" name="number_of_people" value="{{ $number_of_people }}" class="form-control">
+                        @else
                         <input type="text" name="number_of_people" class="form-control">
+                        @endif
                     </div>
 
-                    @if (!Auth::user())
-                        
-                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
-                        <label><i class="fa fa-users" aria-hidden="true"></i> Name :</label>
-                        <input type="text" name="name" placeholder="Your name" class="form-control">
-                    </div>
-
-                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
-                        <label><i class="fa fa-users" aria-hidden="true"></i> Mobile :</label>
-                        <input type="text" name="mobile" placeholder="Mobile Number" class="form-control">
-                    </div>
-
-                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
-                        <label><i class="fa fa-users" aria-hidden="true"></i> Email :</label>
-                        <input type="text" name="email" placeholder="Email Address" class="form-control">
-                    </div>
-
-                    <div class="col-md-6 form-left-agileits-w3layouts second-agile">
-                        <label><i class="fa fa-users" aria-hidden="true"></i> Password :</label>
-                        <input type="text" name="password" class="form-control">
-                    </div>
-
-                    @endif
                     <div class="clearfix"> </div>
                     <div class="make wow shake" data-wow-duration="1s" data-wow-delay=".5s">
                         <input type="submit" value="Make a Reservation">

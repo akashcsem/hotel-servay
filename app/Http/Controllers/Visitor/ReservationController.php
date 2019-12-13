@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Visitor;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Category;
 use App\Models\Admin\Payment;
 use App\Models\Admin\Reservation;
 use App\Models\Admin\Room;
 use App\User;
 use Exception;
+use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class ReservationController extends Controller
 {
@@ -18,9 +21,7 @@ class ReservationController extends Controller
     {
         
        try {
-           
             if (Auth::check()) {
-                
                 $user = Auth::user();
                 
                 $request->validate([
@@ -29,48 +30,37 @@ class ReservationController extends Controller
                     'number_of_room'   => 'required|numeric|min:1|max:50',
                     'number_of_people' => 'required|numeric|min:1|max:100',
                 ]);
+
+                $reservation = Reservation::create([
+                    'reserved_by'      => $user->id,
+                    'room_id'          => $request->room,
+                    'arrival_date'     => $request->arrival_date,
+                    'departure_date'   => $request->departure_date,
+                    'number_of_room'   => $request->number_of_room,
+                    'number_of_people' => $request->number_of_people
+                ]);
+                $room = Room::where('id', $request->room)->first();
+                if ($request->session()->has('room_id')){
+                    $request->session()->forget('room_id');
+                    $request->session()->forget('arrival_date');
+                    $request->session()->forget('number_of_room');
+                    $request->session()->forget('number_of_people');
+                }
+                return view('visitor.reservation_message', compact('room', 'reservation'));
             } else {
-                
-                $request->validate([
-                    'arrival_date'     => 'required',
-                    'departure_date'   => 'required',
-                    'room'             => 'required',
-                    'number_of_room'   => 'required|numeric|min:1|max:50',
-                    'number_of_people' => 'required|numeric|min:1|max:100',
-                    'name'             => 'required|unique:users,name',
-                    'email'            => 'required|email|min:4|max:191|unique:users,email',
-                    'mobile'           => 'required',
-                    'password'         => 'required|min:4|max:50'  
-                ]);
-               
-                $user = User::create([
-                    'name'             => $request->name,
-                    'role_id'          => 2, 
-                    'email'            => $request->email, 
-                    'mobile'           => $request->mobile,
-                    'password'         => Hash::make($request->password),
-                ]);
-                    
-                
-            }
+                $request->session()->put('room_id',          $request->room);
+                $request->session()->put('arrival_date',     $request->arrival_date);
+                $request->session()->put('departure_date',   $request->departure_date);
+                $request->session()->put('number_of_room',   $request->number_of_room);
+                $request->session()->put('number_of_people', $request->number_of_people); 
+                $request->session()->save();
 
-            Reservation::create([
-                'reserved_by'      => $user->id,
-                'room_id'          => $request->room,
-                'arrival_date'     => $request->arrival_date,
-                'departure_date'   => $request->departure_date,
-                'number_of_room'   => $request->number_of_room,
-                'number_of_people' => $request->number_of_people
-            ]);
-            
-
-            $room = Room::where('id', $request->room)->first();
-
-            return redirect()->route('visitor.reservation.success');
-       } catch (Exception $ex) {
-           dd($ex->getMessage());
+                return redirect()->route('visitor.warning');
+            } 
+        } catch (Exception $ex) {
+            return $ex->getMessage();
            return redirect()->back()->with('error', 'Reservation break down');
-       }
+        }
         
     }
 
@@ -97,15 +87,19 @@ class ReservationController extends Controller
             'amount' => 'required'
         ]);
         try {
-            Payment::create([
-                'reservation_id' => $request->reservation_id,
-                'user_id'        => $request->reserved_by,
-                'amount'         => $request->amount,
-                'reference'      => $request->reference
-            ]);
-            return redirect()->route('visitor.reservatio.success');
+            $payment = new Payment();
+            $payment->reservation_id = $request->reservation_id;
+            $payment->user_id = $request->reserved_by;
+            $payment->amount = $request->amount;
+            $payment->reference = $request->reference;
+            $payment->created_by = 1;
+            $payment->updated_by = 1;
+            $payment->save();
+        
+            $reservation = Reservation::where('id', $request->reservation_id)->first();
+            return view('visitor.resurvation_success_message', compact('reservation'));
         } catch (Exception $ex) {
-            return $ex->getMessage();
+            // dd($ex->getMessage());
             return redirect()->back()->with('error', 'Some error please check');
         }
     }
@@ -124,7 +118,11 @@ class ReservationController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
         }
-        dd($reservation);
+    }
+
+    public function warning ()
+    {
+        return view('visitor.registration_warning');
     }
 
 }

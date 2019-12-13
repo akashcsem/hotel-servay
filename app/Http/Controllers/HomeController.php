@@ -22,8 +22,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->session()->has('room_id')){
+            return redirect()->route('visitor.rooms.index');
+        }
         return view('visitor.dashboard');
     }
 }

@@ -13,10 +13,13 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::all();
-        return view('visitor.room', compact('rooms'));
+        $data = [];
+        $data['rooms'] = Room::all();
+        $data['request'] = $request;
+
+        return view('visitor.room', $data);
     }
 
     /**
